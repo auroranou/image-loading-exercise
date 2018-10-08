@@ -2,17 +2,41 @@
 
   <head>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <style>
-      .photo-bucket { margin-top: 10px; }
-      .photo-bucket img { margin-right: 10px; }
-    </style>
+    <link type='text/css' rel='stylesheet' href='./reset.css'/>
+    <link type='text/css' rel='stylesheet' href='./style.css'/>
   </head>
 
   <body>
-    <button class="start">Start Loading Images</button>
-    <button class="stop">Stop Loading Images</button>
-    <div class="photo-bucket"></div>
-
+    <div class='page'>
+      <section id='hero' class='section hero-container'>
+        <div class='hero-text'>
+          <span class='hero-text__tag'>Influencer Sale</span>
+          <h1 class='hero-text__title'>Capricorn Clark Opens Up Her OG Streetwear Archive</h1>
+          <p class='hero-text__desc'>Culture Creator and Mogul Maker Talks Hip-Hop and the Rise of Streetwear</p>
+        </div>
+        <a class='hero-text__read-more' href='#'>Read all Dry Clean Only</a>
+      </section>
+      <section id='curated-lists' class='section featured-container'>
+        <div class='featured-item featured-item--top'>
+          <h2 class='featured-item__title'>Curated Lists 1</h2>
+          <img class='featured-item__image' src='./images/featured-look.png' alt='Curated Lists 1'/>
+        </div>
+        <div class='featured-item featured-item--bottom'>
+          <h2 class='featured-item__title'>Curated Lists 2</h2>
+          <img class='featured-item__image' src='./images/featured-look.png' alt='Curated Lists 2'/>
+        </div>
+        <div class='featured-item featured-item--top'>
+          <h2 class='featured-item__title'>Curated Lists 3</h2>
+          <img class='featured-item__image' src='./images/featured-look.png' alt='Curated Lists 3'/>
+        </div>
+      </section>
+      <section class='section photo-bucket-container'>
+        <h2 class='photo-bucket__title photo-bucket__title--centered'>Curated for You</h2>
+        <div class="photo-bucket"></div>
+        <button class="start">Start Loading Images</button>
+        <button class="stop">Stop Loading Images</button>
+      </section>
+    </div><!-- .page -->
     <script src="./images.js"></script>
     <script src="./async-fiesta.js"></script>
   </body>

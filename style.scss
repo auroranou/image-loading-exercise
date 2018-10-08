@@ -1,0 +1,231 @@
+/* Font families (borrowed from tachyons.io) */
+$font-family-sans: -apple-system, BlinkMacSystemFont,
+'avenir next', avenir,
+'helvetica neue', helvetica,
+ubuntu,
+roboto, noto,
+'segoe ui', arial,
+sans-serif;
+$font-family-serif: garamond, georgia, serif; 
+
+/* Font sizes */
+$font-size-base: 16px;
+$font-size-hero: 48px;
+$font-size-lg: 24px;
+$font-size-md: 18px;
+$font-size-sm: 14px;
+$font-size-xs: 11px;
+
+/* Breakpoints */
+$breakpoint-xs: 480px;
+$breakpoint-sm: 768px;
+$breakpoint-base: 1024px;
+
+/* Misc component sizes */
+$content-max-width: $breakpoint-base;
+$hero-height: 50vh;
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: $font-family-sans;
+  font-size: $font-size-base;
+}
+
+.page {
+  margin: auto;
+  max-width: $content-max-width;
+}
+
+.section {
+  margin: 2rem;
+}
+
+.hero {
+  &-container {
+    background-image: url('./images/hero.png');
+    background-position: right;
+    background-repeat: no-repeat;
+    background-size: auto $hero-height;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+    height: $hero-height;
+    margin-bottom: 6rem;
+  }
+
+  &-text {
+    height: $hero-height;
+    max-width: 50%;
+  }
+
+  &-text__tag {
+    font-size: $font-size-xs;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  &-text__title {
+    font-size: $font-size-hero;
+    font-weight: normal;
+    line-height: 1.5;
+    margin-block-end: 1.5rem;
+    margin-block-start: 0;
+  }
+
+  &-text__desc {
+    font-family: $font-family-serif;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  &-text__read-more {
+    color: inherit;
+    font-size: $font-size-lg;
+    justify-self: flex-end;
+  }
+}
+
+.featured {
+  &-container {
+    display: flex;
+    flex-flow: row nowrap;
+    margin-bottom: 6rem;
+    padding-bottom: 8rem;
+  }
+
+  &-item {
+    position: relative;
+    width: 33%
+  }
+  
+  &-item__title {
+    font-size: $font-size-lg;
+    position: absolute;
+    right: -5%;
+  }
+  
+  &-item--top {
+    .featured-item__title {
+      top: 3rem;
+    }
+  }
+
+  &-item--bottom {
+    transform: translateY(8rem);
+
+    .featured-item__title {
+      bottom: 2rem;
+    }
+  }
+
+  &-item__image {
+    width: 75%;
+  }
+}
+
+.photo-bucket {
+  display: flex;
+  flex-flow: row wrap;
+  padding: 1rem;
+
+  &__title {
+    font-size: $font-size-lg;
+  }
+
+  &__title--centered {
+    text-align: center;
+  }
+
+  &__item {
+    padding: 1rem;
+    width: 25%;
+  }
+
+  &__item-image {
+    width: 100%;
+  }
+
+  &__item-text {
+    padding: 1rem 0;
+  }
+
+  &__item-timestamp {
+    color: #777;
+    display: block;
+    font-size: $font-size-xs;
+    font-weight: 200;
+  }
+
+  &__item-name {
+    align-items: baseline;
+    display: flex;
+    flex-flow: row nowrap;
+    font-size: 1rem;
+    justify-content: space-between;
+    line-height: 2;
+  }
+
+  &__item-desc {
+    color: #777;
+    font-size: $font-size-sm;
+  }
+
+  &__item-price {
+    font-size: $font-size-sm;
+    font-weight: 600;
+    line-height: 2;
+  }
+}
+
+@media only screen and (max-device-width: $breakpoint-sm) {
+  .hero-container {
+    margin-bottom: 3rem;
+    padding: 1rem;
+  }
+
+  .hero-text {
+    max-width: 100%;
+  }
+
+  .hero-text__title {
+    font-size: $font-size-lg;
+  }
+
+  .featured-container {
+    flex-wrap: wrap;
+    margin-bottom: 3rem;
+    padding-bottom: 1rem;
+  }
+
+  .featured-item {
+    padding: 1rem;
+    width: 50%;
+
+    &--bottom {
+      transform: none;
+    }
+  }
+
+  .featured-item__title {
+    position: initial;
+  }
+
+  .featured-item__image {
+    width: 100%;
+  }
+
+  .photo-bucket__item {
+    width: 33%;
+  }
+}
+
+@media only screen and (max-device-width: $breakpoint-xs) {
+  .photo-bucket__item {
+    width: 50%;
+  }
+}

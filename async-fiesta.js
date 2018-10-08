@@ -1,12 +1,32 @@
 $(() => {
   const $bucket = $('.photo-bucket');
-  const draw = img => $bucket.append(img);
+  const draw = (img) => {
+    let $imgWrapper = $('<div/>', { class: 'photo-bucket__item' });
+    let $imgDescription = $(`
+    <div class='photo-bucket__item-text'>
+      <p class='photo-bucket__item-timestamp'>1 minute ago</p>
+      <div class='photo-bucket__item-name'>
+        <p>Fear of Jerry</p>
+        <p>M</p>
+      </div>
+      <p class='photo-bucket__item-desc'>Oversized Striped Tee</p>
+      <p class='photo-bucket__item-price'>$240</p>
+    </div>
+    `);
+
+    $(img).addClass('photo-bucket__item-image');
+    $imgWrapper.append(img);
+    $imgWrapper.append($imgDescription);
+    console.log($imgWrapper);
+
+    $bucket.append($imgWrapper);
+  };
 
   // Variable for tracking whether to keep loading images or not
   let loadingAllowed = true;
 
   // NOTE: The height and width variables can be changed to fetch different sized images.
-  const getImageUrl = id => `https://process.fs.grailed.com/AJdAgnqCST4iPtnUxiGtTz/cache=expiry:max/rotate=deg:exif/rotate=deg:0/resize=width:30,height:30,fit:crop/output=format:jpg,quality:95/compress/${id}`;
+  const getImageUrl = id => `https://process.fs.grailed.com/AJdAgnqCST4iPtnUxiGtTz/cache=expiry:max/rotate=deg:exif/rotate=deg:0/resize=width:40,height:60,fit:crop/output=format:jpg,quality:95/compress/${id}`;
 
   function startLoading() {
     loadingAllowed = true;
@@ -23,6 +43,8 @@ $(() => {
         res = batchIterator.next();
       }
     }
+
+    console.log('Images loaded successfully!');
   }
 
   function getBatches() {
@@ -52,8 +74,7 @@ $(() => {
     }
   }
 
-  const stopLoading = () => {
-    // TODO: Implement me.
+  function stopLoading() {
     console.log('Stop!');
     loadingAllowed = false;
   };
