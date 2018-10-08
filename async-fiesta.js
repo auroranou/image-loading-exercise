@@ -8,8 +8,25 @@ $(() => {
   // NOTE: The height and width variables can be changed to fetch different sized images.
   const getImageUrl = id => `https://process.fs.grailed.com/AJdAgnqCST4iPtnUxiGtTz/cache=expiry:max/rotate=deg:exif/rotate=deg:0/resize=width:30,height:30,fit:crop/output=format:jpg,quality:95/compress/${id}`;
 
-  const startLoading = () => {
-    const batches = IMAGE_IDS.reduce((memo, curr, currIdx) => {
+  function startLoading() {
+    loadingAllowed = true;
+
+    const batchIterator = getImages();
+    let res = batchIterator.next();
+
+    while (!res.done) {
+      if (loadingAllowed) {
+        res.value.then(imagesToDraw => {
+          imagesToDraw.map(i => draw(i));
+        });
+
+        res = batchIterator.next();
+      }
+    }
+  }
+
+  function getBatches() {
+    return IMAGE_IDS.reduce((memo, curr, currIdx) => {
       if (currIdx % 5 === 0) {
         memo[currIdx / 5] = [curr];
       } else {
@@ -18,10 +35,22 @@ $(() => {
       }
       return memo;
     }, []);
+  }
 
-    batches.map(batch => processImageBatch(batch));
-    console.log('Images loaded successfully');
-  };
+  function* getImages() {
+    const batches = getBatches();
+    let i = 0;
+
+    while (i < batches.length) {
+      if (loadingAllowed) {
+        const batch = batches[i];
+        const batchPromises = batch.map(imgId => fetchImage(imgId));
+        yield Promise.all(batchPromises);
+
+        i += 1;
+      }
+    }
+  }
 
   const stopLoading = () => {
     // TODO: Implement me.
@@ -36,12 +65,6 @@ $(() => {
       img.onerror = reject;
       img.src = getImageUrl(imgId);
     });
-  }
-
-  async function processImageBatch(batch) {
-    let batchPromises = batch.map(imgId => fetchImage(imgId));
-    const results = await Promise.all(batchPromises);
-    results.forEach(img => draw(img));
   }
 
   $('button.start').on('click', startLoading);
