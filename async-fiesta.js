@@ -17,7 +17,6 @@ $(() => {
     $(img).addClass('photo-bucket__item-image');
     $imgWrapper.append(img);
     $imgWrapper.append($imgDescription);
-    console.log($imgWrapper);
 
     $bucket.append($imgWrapper);
   };
@@ -28,17 +27,18 @@ $(() => {
   // NOTE: The height and width variables can be changed to fetch different sized images.
   const getImageUrl = id => `https://process.fs.grailed.com/AJdAgnqCST4iPtnUxiGtTz/cache=expiry:max/rotate=deg:exif/rotate=deg:0/resize=width:40,height:60,fit:crop/output=format:jpg,quality:95/compress/${id}`;
 
-  function startLoading() {
+  const batchIterator = getImages();
+  const batches = getBatches();
+
+  async function startLoading() {
     loadingAllowed = true;
 
-    const batchIterator = getImages();
     let res = batchIterator.next();
 
-    while (!res.done) {
+    while (!res.done && loadingAllowed) {
       if (loadingAllowed) {
-        res.value.then(imagesToDraw => {
-          imagesToDraw.map(i => draw(i));
-        });
+        const imagesToDraw = await res.value;
+        imagesToDraw.map(i => draw(i));
 
         res = batchIterator.next();
       }
@@ -60,7 +60,6 @@ $(() => {
   }
 
   function* getImages() {
-    const batches = getBatches();
     let i = 0;
 
     while (i < batches.length) {
@@ -70,8 +69,12 @@ $(() => {
         yield Promise.all(batchPromises);
 
         i += 1;
+      } else {
+        yield;
       }
     }
+
+    return;
   }
 
   function stopLoading() {
